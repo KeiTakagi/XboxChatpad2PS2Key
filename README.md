@@ -3,7 +3,7 @@ Xbox ChatpadとSTM32F103を、IchigoJamのモバイルキーボードとして�
 Microsoft製のXbox Chatpadで動作しますが、Microsoft製のXbox Chatpadが入手しにくいため、比較的入手しやすいクローン(例えば、TYX-517PCB1 Ver2.5)が代替品として使用出来ます.
 注意点としまして、日本語版のXbox Chatpadは、本ライブラリーで定義しているキーの配置と異なるため、印刷されているキーと違う動作をします.
 Microsoft製のXbox Chatpadはクローンより高速に起動します.
-****おおさかJ3****さんのHPにIchigoJamモバイルキーボードの完成作品が多数アップされています.(http://jr3kqf.webcrow.jp/ichigojam1.html)
+****おおさかJR3****さんのHPにIchigoJamモバイルキーボードの完成作品が多数アップされています.(http://jr3kqf.webcrow.jp/ichigojam1.html)
 
 ![タイトル](./img/xboxchatpad001.jpg)
 ※写真のIchigoJamはKumaJamです。
@@ -90,7 +90,7 @@ Blue PileのLEDが等間隔に点滅している場合は正常に接続でき�
 Blue Pill,Xbox Chatpadは3.3Vで動作します.そのため、3.3V以外で動作するマイコン例えば、Arduino UNO(5V)へは直接接続しないでください.
 
 ##他の3.3V系のマイコンにPS/2キーボードとして使用したい場合
-****おおさかJ3****さんより3.3V系のマイコンとして、ORENGE pico、IchigoLatteに接続し動作したとの報告を、いただいています。その際に、プルアップ抵抗(1-10KΩ)が必要になるものがあります.
+****おおさかJR3****さんより3.3V系のマイコンとして、ORENGE pico、IchigoLatteに接続し動作したとの報告を、いただいています。その際に、プルアップ抵抗(1-10KΩ)が必要になるものがあります.
 
 ## キーリピートについて
 - キーリピートには対応しておりません
