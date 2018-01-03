@@ -29,6 +29,9 @@ class HardwareSerial;
 #define KEY_NONE          0      // 継続またはバッファに変換対象なし
 #define KEY_ERROR         255    // キーコードエラー
 
+#define US                0      // 英語版
+#define JP                1      // 日本語版
+
 // キーボードイベント構造体
 typedef struct  {
   uint8_t code  : 8; // code
@@ -52,13 +55,17 @@ typedef union {
 class KChatpad {
   private:
     HardwareSerial *_serial;
+    uint8_t _keyboardType;
     uint8_t _buffer[8];
     uint8_t _last_key0;
     uint8_t _last_key1;
     uint32_t _last_ping;
   public:
     // キーボード利用開始
+    uint8_t begin(HardwareSerial &, int);
+    // キーボード利用開始
     uint8_t begin(HardwareSerial &);
+
     // キーボード利用終了
     void end();
     // キーボード初期化

@@ -6,6 +6,8 @@
 // Special Thanks：
 //         おおさかJR3
 //
+// 2017/12/10 チャットパッド日本語キーボード対応
+
 
 #include "ps2dev.h"
 #include "KChatpad.h"
@@ -111,7 +113,12 @@ int kbdCmd(int command) {
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
-  kb.begin(Serial2);
+
+  if (digitalRead(PB2) == 0) {
+    kb.begin(Serial2, US);
+  } else {
+    kb.begin(Serial2, JP);
+  }
 
   // establish ps/2 connection with target
   while (keyboard.write(0xAA) != 0) {

@@ -9,6 +9,7 @@
 // Special Thanks：
 //         おおさかJR3
 //
+// 2017/12/10 チャットパッド日本語キーボード対応
 
 #include "HardwareSerial.h"
 #include "wiring_private.h"
@@ -27,7 +28,75 @@ static const uint8_t KeepAwakeMessage[]  = { 0x87, 0x02, 0x8C, 0x1B, 0xD0 };
 
 // Normal, Shift  , Ctrl , Alt    , Win
 // Normal, Shift  , Green, Orange , People
-static const uint16_t AsciiTable[] PROGMEM = {
+uint16_t AsciiTableJP[] PROGMEM = {
+  0x003D  , 0x013D  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 11 :7 */
+  0x0036  , 0x0136  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 12 :6 */
+  0x002E  , 0x012E  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 13 :5 */
+  0x0025  , 0x0125  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 14 :4 */
+  0x0026  , 0x0126  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 15 :3 */
+  0x001E  , 0x011E  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 16 :2 */
+  0x0016  , 0x0116  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 17 :1 */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 18 Unused */
+
+  0x003C  , 0x013C  ,  0x013E ,  0x014C ,  0x0000 ,   /* 21 :U */
+  0x0035  , 0x0135  ,  0x0136 ,  0x0000 ,  0x0000 ,   /* 22 :Y */
+  0x002C  , 0x012C  ,  0x012E ,  0x016A ,  0x000D ,   /* 23 :T (0x000D:TAB)*/
+  0x002D  , 0x012D  ,  0x0125 ,  0x0000 ,  0x0000 ,   /* 24 :R */
+  0x0024  , 0x0124  ,  0x0126 ,  0x0000 ,  0x0076 ,   /* 25 :E */
+  0x001D  , 0x011D  ,  0x011E ,  0x013D ,  0x0000 ,   /* 26 :W */
+  0x0015  , 0x0115  ,  0x0151 ,  0x0054 ,  0x0000 ,   /* 27 :Q */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 28 Unused */
+
+  0x003B  , 0x013B  ,  0x0051 ,  0x015B ,  0x0000 ,   /* 31 :J */
+  0x0033  , 0x0133  ,  0x005D ,  0x0149 ,  0x0000 ,   /* 32 :H */
+  0x0034  , 0x0134  ,  0x005B ,  0x0141 ,  0x0000 ,   /* 33 :G */
+  0x002b  , 0x012b  ,  0x0051 ,  0x0000 ,  0x0000 ,   /* 34 :F */
+  0x0023  , 0x0123  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 35 :D */
+  0x001B  , 0x011B  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 36 :S */
+  0x001C  , 0x011C  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 37 :A */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 38 Unused */
+
+  0x0031  , 0x0131  ,  0x013D ,  0x0000 ,  0x0000 ,   /* 41 :N */
+  0x0032  , 0x0132  ,  0x014A ,  0x0000 ,  0x0000 ,   /* 42 :B */
+  0x002A  , 0x012A  ,  0x0116 ,  0x0000 ,  0x0000 ,   /* 43 :V */
+  0x0021  , 0x0121  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 44 :C */
+  0x0022  , 0x0122  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 45 :X */
+  0x001A  , 0x011A  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 46 :Z */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 47 Unused */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 48 Unused */
+
+  0xE06B  , 0x0000  ,  0xE072 ,  0x0000 ,  0x0000 ,   /* 51 :Left DOWN */
+  0x003A  , 0x013A  ,  0x0049 ,  0x0041 ,  0x0000 ,   /* 52 :M */
+  0x0049  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 53 :カタ */
+  0x0029  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 54 :Space  */
+  0x0066  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 55 :Backspace */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 56 Unused */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 57 Unused */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 58 Unused */
+
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 61 Unused */
+  0x0041  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 62 :漢字 */
+  0x005A  , 0x005A  ,  0x005A ,  0x005A ,  0x005A ,   /* 63 :Enter */
+  0x004d  , 0x014d  ,  0x004E ,  0x014E ,  0x0000 ,   /* 64 :P */
+  0x0045  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 65 :0 */
+  0x0046  , 0x0146  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 66 :9 */
+  0x003E  , 0x013E  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 67 :8 */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 68 Unused */
+
+  0xE074  , 0x0000  ,  0xE075 ,  0x0000 ,  0x0000 ,   /* 71 :Right  UP*/
+  0x004B  , 0x014B  ,  0x0052 ,  0x004C ,  0x024B ,   /* 72 :L */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 73 Unused */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 74 Unused */
+  0x0044  , 0x0144  ,  0x0055 ,  0x0155 ,  0x0000 ,   /* 75 :O */
+  0x0043  , 0x0143  ,  0x0146 ,  0x0152 ,  0x0000 ,   /* 76 :I */
+  0x0042  , 0x0142  ,  0x004A ,  0x015D ,  0x0000 ,   /* 77 :K */
+  0x0000  , 0x0000  ,  0x0000 ,  0x0000 ,  0x0000     /* 78 Unused */
+};
+
+// US Key
+// Normal, Shift  , Ctrl , Alt    , Win
+// Normal, Shift  , Green, Orange , People
+static const uint16_t AsciiTableUS[] PROGMEM = {
   0x003D  , 0x013D  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 11 :7 */
   0x0036  , 0x0136  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 12 :6 */
   0x002E  , 0x012E  ,  0x0000 ,  0x0000 ,  0x0000 ,   /* 13 :5 */
@@ -145,7 +214,6 @@ uint8_t keyCode[] = {
   0x00 //END
 };
 
-
 //
 // 利用開始(初期化)
 // 引数
@@ -153,12 +221,21 @@ uint8_t keyCode[] = {
 // 戻り値
 //  0:正常終了 0以外: 異常終了
 uint8_t KChatpad::begin(HardwareSerial &serial) {
+  return begin(serial, (int)US);
+}
+
+// 利用開始(初期化)
+// 引数
+//   serial       : シリアル番号
+//   keyboardType : キーボードタイプ
+// 戻り値
+//  0:正常終了 0以外: 異常終了
+uint8_t KChatpad::begin(HardwareSerial &serial, int keyboardType) {
   uint8_t i, err = 0;
   err = init();
-
   if ( err != 0 )goto ERROR;
-
   _serial = &serial;
+  _keyboardType = keyboardType;
 
   // 電源投入後500ms以上待って
   // InitMessage（87 02 8C 1F CC）を送信する必要があります
@@ -295,7 +372,12 @@ keyEvent KChatpad::read() {
     _last_key1 = key1;
 
     index = (((code - 0x11) & 0x70) >> 1) | ((code - 0x11) & 0x7);
-    if (index >= (sizeof(AsciiTable) / 5)) goto ERROR;
+    if (_keyboardType == JP) {
+      if (index >= (sizeof(AsciiTableJP) / 5)) goto ERROR;
+    } else {
+      if (index >= (sizeof(AsciiTableUS) / 5)) goto ERROR;
+    }
+
 
     in.kevt.SHIFT = 0;  // Shiftキー
     in.kevt.CTRL  = 0;  // Ctrlキー
@@ -311,7 +393,11 @@ keyEvent KChatpad::read() {
     if ( modifiers & PeopleMask )       index += 4; // Windowsキー ON
 
     in.kevt.code =  0;
-    inCode = pgm_read_word_near(AsciiTable + index);//2バイト読み込み
+    if (_keyboardType == JP) {
+      inCode = pgm_read_word_near(AsciiTableJP + index);//2バイト読み込み
+    } else {
+      inCode = pgm_read_word_near(AsciiTableUS + index);//2バイト読み込み
+    }
     in.kevt.code = inCode & 0x00FF;
     function = inCode >> 8;
 
